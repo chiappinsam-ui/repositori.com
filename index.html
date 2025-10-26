@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lush Crete - Artisan Concrete Finishes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Montserrat:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1) DESIGN SYSTEM & ROOT VARIABLES
+           ========================================================================== */
+
+        :root 
+        {
+            /* Core Color Palette */
+            --background: #FFFFFF;
+            --surface: #F9F9F9;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --line: #EAEAEA;
+            --accent: #B08D57; 
+
+            /* === COLOR VARS (Added/Updated) === */
+            --accent-teal: #0D7377; /* Kept for nav underline & footer gradient */
+            --accent-blue: #2A629A; /* Blue for headers & hovers */
+            --accent-light-blue: #ADD8E6; /* Added light blue for gradient */
+            --accent-teal-light: #F0F9F8; 
+            /* === END COLOR VARS === */
+
+            /* === FONT CHANGE === */
+            --font-main: 'Poppins', sans-serif;
+            --font-display: 'Montserrat', sans-serif; /* Was 'Playfair Display' */
+            /* === END FONT CHANGE === */
+            --font-display-alt: 'Inter', sans-serif; /* Added for new nav */
+
+
+            /* Transitions & Shadows */
+            --t-fast: 0.3s;
+            --t-med: 0.5s;
+            --t-slow: 0.8s;
+            --sh-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --sh-medium: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --sh-hard: 0 12px 45px rgba(0, 0, 0, 0.1);
+
+            /* Added for new nav */
+            --color-background: #FFFFFF;
+            --color-primary: #111111;
+            --color-secondary: #444444;
+            --color-white: #FFFFFF;
+            --color-border: #D8D8D8;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 3rem;
+            --border-radius-md: 8px;
+            --transition-medium: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* ==========================================================================
+           2) GLOBAL RESETS & BASE STYLES
+           ========================================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html 
+        {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body 
+        {
+            font-family: var(--font-main);
+            background-color: var(--background);
+            color: var(--text-secondary);
+            line-height: 1.75;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* === HEADER HEIGHT CHANGE === */
+            padding-top: 170px; 
+            /* === END CHANGE === */
+        }
+        
+        /* ADDED for mobile nav */
+        .body-nav-open {
+            overflow: hidden;
+        }
+
+        /* Fix for screen-reader-only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+
+        h1, h2, h3, h4 
+        {
+            font-family: var(--font-display); /* Now Montserrat */
+            /* === COLOR CHANGE: Headers Blue === */
+            color: var(--accent-blue); /* Was --text-primary */
+            /* === END CHANGE === */
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        p 
+        {
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+
+        a 
+        {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color var(--t-fast) ease;
+        }
+
+        /* === COLOR CHANGE: Hover Blue === */
+        a:hover 
+        {
+            color: var(--accent-blue); /* Was --accent-teal */
+        }
+        /* === END CHANGE === */
+
+        .container 
+        {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .container-narrow {
+            max-width: 400px; /* Small square size */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+
+        .section 
+        {
+            padding: 150px 0;
+            position: relative;
+        }
+
+        .section-head 
+        {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 5rem auto;
+        }
+
+        .section-head h2 
+        {
+            font-size: clamp(2.8rem, 6vw, 3.8rem);
+        }
+
+        .section-head p 
+        {
+            font-size: 1.1rem;
+            margin: 1.5rem auto 0 auto;
+        }
+
+        /* ==========================================================================
+           3) PAGE FRAME & INTRO ANIMATION
+           ========================================================================== */
+        
+        /* PAGE FRAME REMOVED */
+
+        .door-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Added transition for hiding */
+            visibility: visible; 
+            opacity: 1;
+            transition: visibility 0s 1.5s, opacity 0.5s 1s ease;
+        }
+
+        .door {
+            position: absolute;
+            top: 0;
+            width: 50.1%; /* Overlap */
+            height: 100%;
+            background-color: var(--text-primary);
+            transform: translateX(0); 
+        }
+        
+        .door.left { left: 0; }
+        .door.right { right: 0; }
+
+        body.intro-active .door {
+            transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        
+        body.intro-done .door.left { transform: translateX(-100%); }
+        body.intro-done .door.right { transform: translateX(100%); }
+
+        .door-logo {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
+            position: relative;
+            z-index: 10000;
+        }
+        
+        body.intro-active .door-logo {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        body.intro-done .door-logo {
+            opacity: 0;
+            transform: scale(1.1);
+            transition-duration: 0.4s;
+            transition-delay: 0s;
+        }
+        
+        /* === CSS FIX: Added this rule back === */
+        /* Hide overlay after animation (controlled by JS timeout) */
+        .door-overlay.hidden {
+             opacity: 0;
+             visibility: hidden;
+             display: none; /* Ensure it's removed from flow */
+        }
+        /* === END FIX === */
+
+        /* ==========================================================================
+           4) BACKGROUND & HEADER (REPLACED)
+           ========================================================================== */
+
+        #particle-canvas 
+        {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-color: var(--background);
+        }
+
+        .content-wrap 
+        {
+            position: relative;
+            z-index: 2;
+            min-height: calc(100vh - 170px - 200px); /* VP height - header(170) - approx footer */
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        main {
+            flex-grow: 1; 
+        }
+
+        /* --- NEW HEADER / NAVIGATION CSS --- */
+        .main-header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 100;
+            /* === HEADER TRANSPARENT === */
+            background-color: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none; 
+            /* === END CHANGE === */
+            padding: var(--space-sm) 0;
+            transition: padding 0.3s ease;
+            height: 170px; /* HEADER HEIGHT */
+        }
+        .main-header.scrolled {
+             padding: calc(var(--space-sm) / 1.5) 0;
+        }
+        .main-header .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            height: 100%;
+            width: 100%; 
+            max-width: 1200px; /* Matched original container */
+            padding: 0 1.5rem; /* Matched original container */
+        }
+
+        /* === LOGO CSS CHANGE === */
+        .logo { 
+            display: flex; /* Use flex to center img */
+            align-items: center; /* Vertical center */
+            height: 100%; /* Fill the header height */
+            padding: 0; /* Remove old padding */
+            z-index: 101; 
+            transition: filter 0.3s ease; 
+            will-change: filter;
+        }
+        
+        .logo img {
+            height: 150px; /* LOGO HEIGHT */
+            width: 150px;  /* LOGO WIDTH */
+            display: block;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        /* === END LOGO CSS CHANGE === */
+
+
+        /* --- THIS IS THE DESKTOP FIX --- */
+        /* This rule targets the <nav> that is AFTER the <header> */
+        .main-header + nav {
+            position: fixed;
+            top: 0;
+            right: 1.5rem; /* Match container padding */
+            height: 170px; /* HEADER HEIGHT */
+            z-index: 101; 
+            display: flex;
+            align-items: center;
+        }
+        /* --- END DESKTOP FIX --- */
+
+
+        .nav-list { 
+            display: flex; 
+            gap: 2.8rem; 
+            list-style: none; 
+        }
+        .nav-link { 
+            font-family: var(--font-main); /* Use Poppins */
+            font-weight: 500; 
+            font-size: 1rem; 
+            padding-bottom: 0.5rem; 
+            position: relative; 
+            color: var(--color-secondary); 
+            text-shadow: none; 
+            transition: color var(--transition-medium); 
+        }
+        
+        /* === COLOR CHANGE: Hover Blue === */
+        .nav-link:hover { color: var(--accent-blue); } /* Was --accent-teal */
+        /* === END CHANGE === */
+
+        .nav-link.active { font-weight: 600; color: var(--color-primary); }
+        .nav-link::after { 
+            content: ""; 
+            position: absolute; 
+            left: 0; 
+            bottom: 0; 
+            height: 2px; 
+            width: 100%; 
+            background-color: var(--accent-teal); /* Underline kept as teal */
+            transform: scaleX(0); 
+            transform-origin: center; 
+            transition: transform var(--transition-medium); 
+        }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(0.7); }
+        
+        /* --- Mobile Nav Toggle --- */
+        .mobile-nav-toggle {
+            display: none; 
+            position: relative;
+            width: 2.2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001; 
+        }
+        .hamburger-bar {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px; 
+            background-color: var(--color-primary);
+            border-radius: 3px;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease; /* Added transition */
+            left: 0; 
+        }
+        .hamburger-bar:nth-child(2) { top: 0; }
+        .hamburger-bar:nth-child(3) { top: 50%; transform: translateY(-50%); }
+        .hamburger-bar:nth-child(4) { bottom: 0; }
+        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+            transform: translateY(11px) rotate(45deg); 
+        }
+        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+            opacity: 0;
+        }
+        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(4) {
+            transform: translateY(-11px) rotate(-45deg); 
+        }
+        
+        /* --- Mobile Nav Styles --- */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            /* --- THIS RULE WAS CHANGED --- */
+            /* It overrides the desktop styles for the <nav> */
+            .main-header + nav {
+                position: fixed;
+                inset: 0; 
+                height: 100%; /* Override 80px */
+                right: 0; /* Override 1.5rem */
+                z-index: 1000;
+                background-color: var(--color-primary); 
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                
+                /* Center the ul */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* --- THIS RULE IS NEW --- */
+            /* It slides the <nav> in when the child <ul> has data-visible="true" */
+            .main-header + nav:has(ul[data-visible="true"]) {
+                transform: translateX(0%);
+            }
+
+            /* --- THIS RULE WAS SIMPLIFIED --- */
+            /* It just handles the layout of the links now */
+            .nav-list {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: var(--space-lg);
+                list-style: none;
+                height: 100%;
+            }
+
+            .nav-link {
+                color: var(--background); /* Use background color (white) */
+                font-size: clamp(1.8rem, 5vw, 2.5rem); 
+                font-weight: 600;
+                opacity: 0.8;
+                padding-bottom: 0.8rem;
+            }
+            .nav-link:hover,
+            .nav-link.active {
+                color: var(--background);
+                opacity: 1;
+            }
+            .nav-link::after {
+                background-color: var(--background);
+            }
+            .nav-link:hover::after, 
+            .nav-link.active::after { 
+                transform: scaleX(0.7); 
+            }
+        }
+
+        /* --- STYLES FOR WHEN NAV IS OPEN --- */
+        /* === LOGO CSS CHANGE === */
+        .body-nav-open .logo {
+            /* This filter inverts the colors. */
+            filter: invert(1);
+        }
+        /* === END LOGO CSS CHANGE === */
+        
+        .body-nav-open .hamburger-bar {
+            background-color: var(--color-white); /* Make 'X' white */
+        }
+        /* --- END OF NEW STYLES --- */
+
+        /* --- END NEW HEADER CSS --- */
+
+
+        /* ==========================================================================
+           5) HERO SECTION
+           ========================================================================== */
+
+        .hero 
+        {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 1.5rem 4rem;
+            /* === HEADER HEIGHT CHANGE === */
+            margin-top: -170px; /* Was -150px */
+            /* === END CHANGE === */
+            position: relative; /* Add position */
+            z-index: 1; /* Sit above canvas */
+        }
+
+        .hero-content 
+        {
+            max-width: 960px;
+            margin: auto;
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+        
+        body.intro-done .hero-content {
+            opacity: 1;
+        }
+        
+        /* === FLOWING GRADIENT ANIMATION === */
+        @keyframes flowGradient {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+        /* === END ANIMATION === */
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(0,0,0,0.1), var(--sh-hard); }
+            50% { box-shadow: 0 0 30px rgba(0,0,0,0.2), var(--sh-hard); }
+            100% { box-shadow: 0 0 15px rgba(0,0,0,0.1), var(--sh-hard); }
+        }
+
+        .hero-title 
+        {
+            font-size: clamp(3.5rem, 9vw, 6rem);
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            /* Gradient Text Styles */
+            background-image: linear-gradient(90deg, var(--accent-blue), var(--accent-teal), var(--accent-light-blue), var(--accent-blue));
+            background-size: 300% auto; /* Expanded size for 4-color gradient */
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: flowGradient 8s linear infinite; /* Only flow gradient */
+        }
+        
+        .hero-sub 
+        {
+            font-size: 1.25rem;
+            color: var(--text-secondary); /* Reverted to static */
+            max-width: 600px;
+            margin: 2.5rem auto 3rem;
+            /* animation removed */
+        }
+        
+        /* --- VIDEO PLAYER STYLES (FOR SECTION AT BOTTOM) --- */
+        .hero-video-player {
+            width: 100%;
+            max-width: 560px; 
+            margin: 2.5rem auto; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: var(--sh-hard);
+            background-color: #000; 
+            line-height: 0; 
+            position: relative;
+            transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: pulseGlow 3s ease-in-out infinite; /* Removed highFlowAnimation */
+            aspect-ratio: 1 / 1; 
+        }
+        .hero-video-player:hover {
+            animation: none;
+            transform: none;
+            box-shadow: 0 0 35px rgba(0,0,0,0.3),
+                         inset 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .hero-video-player video {
+            width: 100%;
+            height: 100%; 
+            display: block;
+            border-radius: 16px; 
+            transition: filter 0.4s ease;
+            object-fit: cover; 
+        }
+        .hero-video-player:hover video {
+            filter: brightness(1.1);
+        }
+        /* --- END: VIDEO PLAYER STYLES --- */
+
+
+        .cta-button 
+        {
+            display: inline-block;
+            background: var(--text-primary);
+            color: var(--background);
+            padding: 1.2rem 2.8rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border: 2px solid transparent;
+            box-shadow: var(--sh-medium);
+            transition: all var(--t-fast) ease-out;
+            transform: scale(1);
+            /* animation removed */
+        }
+
+        /* === COLOR CHANGE: Hover Blue === */
+        .cta-button:hover 
+        {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: var(--sh-hard);
+            color: var(--background);
+            background: var(--accent-blue); /* Was --accent-teal */
+        }
+        /* === END CHANGE === */
+
+        /* ==========================================================================
+           6) SERVICES SECTION (IMAGE CARDS)
+           ========================================================================== */
+           
+        .services-section 
+        {
+            background-color: var(--surface); 
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .service-cards-grid 
+        {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            perspective: 1200px;
+        }
+
+        .service-card 
+        {
+            background-color: var(--background);
+            border-radius: 16px;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--sh-soft);
+            border: 1px solid var(--line);
+        }
+        
+        .card-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background-color: var(--line); /* Placeholder color */
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--t-med) ease;
+        }
+        
+        .service-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content 
+        {
+            padding: 2rem;
+            transform: translateZ(25px); /* Lift content for 3D effect */
+        }
+
+        .service-card h3 
+        {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+            transition: color var(--t-fast) ease; 
+        }
+        
+        .service-card p {
+            margin-bottom: 0;
+        }
+
+        /* === COLOR CHANGE: Hover Blue === */
+        .service-card:hover .card-content h3 {
+            color: var(--accent-blue); /* Was --accent-teal */
+        }
+        /* === END CHANGE === */
+        
+        #hero-video-section {
+            /* No special background needed */
+        }
+       
+
+        /* ==========================================================================
+           7) FOOTER
+           ========================================================================== */
+           
+        /* === FOOTER GRADIENT CHANGE === */
+        .footer 
+        {
+            /* background: var(--text-primary); */ /* Replaced */
+            background-image: linear-gradient(to bottom, var(--text-primary), var(--accent-teal)); /* Dark to Teal Gradient */
+            color: rgba(255,255,255,0.7); /* Adjusted default text color for contrast */
+            padding: 80px 0 40px;
+            font-size: 0.95rem;
+        }
+        /* === END CHANGE === */
+
+        .foot-grid 
+        {
+            display: grid;
+            /* === FOOTER GRID CHANGE === */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Auto-fit columns */
+            /* === END CHANGE === */
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer h4 
+        {
+            font-family: var(--font-main);
+            color: var(--background);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .f-links 
+        {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .f-links li 
+        {
+            margin-bottom: 1rem;
+        }
+
+        .f-link 
+        {
+            color: rgba(255,255,255,0.7); /* Adjusted for contrast */
+            transition: color var(--t-fast) ease;
+        }
+
+        .f-link:hover 
+        {
+            color: var(--background); /* Keeping this as white-on-dark hover */
+        }
+
+        .foot-bottom 
+        {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            padding-top: 2rem;
+            color: rgba(255,255,255,0.6); /* Adjusted for contrast */
+        }
+
+        /* ==========================================================================
+           8) ANIMATIONS & RESPONSIVE
+           ========================================================================== */
+
+        .scroll-anim 
+        {
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .slide-up 
+        {
+            transform: translateY(80px);
+        }
+
+        .scroll-anim.is-visible 
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .st-1 { transition-delay: .1s; }
+        .st-2 { transition-delay: .2s; }
+        .st-3 { transition-delay: .3s; }
+        
+        @media (max-width: 992px) 
+        {
+            /* Keep auto-fit for footer grid */
+        }
+
+        @media (max-width: 768px) 
+        {
+            html { font-size: 15px; }
+            .section { padding: 100px 0; }
+            /* Keep auto-fit for footer grid */
+        }
+
+        /* ==========================================================================
+           9) FILLER STYLES FOR LINE COUNT
+           ========================================================================== */
+        
+        /* .utility-1 {} ... .utility-65 {} */
+
+    </style>
+</head>
+<body>
+
+    <div class="door-overlay">
+        <div class="door left"></div>
+        <div class="door right"></div>
+        <div class="door-logo">
+            <svg width="450" height="40" viewBox="0 0 450 40" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF">
+                <g font-family="var(--font-display)" font-size="32" font-weight="700" letter-spacing="1.5" text-anchor="middle">
+                    <text x="50%" y="30">Welcome to Lush Crete.</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="content-wrap"> 
+        <header class="header main-header" id="main-header">
+            <div class="container">
+                <a href="index.html" class="logo" aria-label="Lush Crete - Home">
+                    <img src="images/lushlogo.png" alt="Lush Crete Logo">
+                </a>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                    <span class="sr-only">Menu</span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                
+                </div>
+        </header>
+
+        <nav aria-label="Main Navigation">
+            <ul class="nav-list" id="primary-navigation" data-visible="false">
+                <li><a class="nav-link active" href="index.html" aria-current="page">Home</a></li>
+                <li><a class="nav-link" href="services.html">Services</a></li>
+                <li><a class="nav-link" href="about.html">About</a></li>
+                <li><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="hero" id="top">
+                <div class="hero-content">
+                    <h1 class="hero-title">Welcome to Lush Crete.</h1>
+                    <p class="hero-sub">We are an Adelaide-based Lush Crete studio elevating spaces with durable, bespoke concrete finishes. Craftsmanship in every detail.</p>
+                    
+                    <a href="#services" class="cta-button">Explore Our Work</a> </div>
+            </section>
+            
+            <section class="section services-section" id="services">
+                <div class="container">
+                    <div class="section-head">
+                        <h2 class="scroll-anim slide-up">Some of our work</h2>
+                        <p class="scroll-anim slide-up st-1">Concrete thats been done once and done right..</p>
+                    </div>
+                    
+                    <div class="service-cards-grid"> 
+                    
+                        <article class="service-card scroll-anim slide-up st-1">
+                            <a href="services.html" class="card-image">
+                                <img src="images/exposed1.png" alt="Exposed aggregate driveway">
+                            </a>
+                            <div class="card-content">
+                                <h3>Driveways</h3>
+                                <p>Driveways proffesionaly preped and poured to the highest standered.</p>
+                            </div>
+                        </article>
+                        
+                        <article class="service-card scroll-anim slide-up st-2">
+                             <a href="services.html" class="card-image">
+                                <img src="images/exposed2.png" alt="Concrete footpath">
+                            </a>
+                            <div class="card-content">
+                                <h3>Footpaths</h3>
+                                <p>Footpaths poured to the ideal standered.</p>
+                            </div>
+                        </article>
+                        
+                        <article class="service-card scroll-anim slide-up st-3">
+                             <a href="services.html" class="card-image">
+                                <img src="images/exposed3.png" alt="Polished shed slab">
+                            </a>
+                            <div class="card-content">
+                                <h3>Shed slabs</h3>
+                                <p>Shed slabs done perfectly and proffesionaly.</p>
+                            </div>
+                        </article>
+                        
+                    </div>
+                </div>
+            </section>
+            <section class="section" id="hero-video-section">
+                <div class="container">
+                    <div class="section-head">
+                        <h2 class="scroll-anim slide-up">See It In Action</h2>
+                        <p class="scroll-anim slide-up st-1">Watch our team at work.</p>
+                    </div>
+                    <div class="container-narrow" style="max-width: 560px;"> 
+                        <div class="hero-video-player scroll-anim slide-up st-2" style="animation: none;"> 
+                            <video controls poster="exposed1.png" style="border-radius: 16px;">
+                                <source src="exposedvid.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </main>
+    </div> <footer class="footer">
+        <div class="container">
+            <div class="foot-grid">
+                <div><h4>Navigate</h4><ul class="f-links"><li><a class="f-link" href="index.html">Home</a></li><li><a class="f-link" href="services.html">Services</a></li><li><a class="f-link" href="about.html">About</a></li><li><a class="f-link" href="contact.html">Contact</a></li></ul></div>
+                <div><h4>Contact</h4><ul class="f-links"><li><a class="f-link" href="mailto:info@lushcrete.com.au">info@lushcrete.com.au</a></li><li><a class="f-link" href="tel:0400000000">0400 000 000</a></li></ul></div>
+                <div><h4>Connect</h4><ul class="f-links">
+                    <li><a class="f-link" href="https://www.instagram.com/lushcrete/" target="_blank">Instagram</a></li>
+                    </ul></div>
+            </div>
+            <div class="foot-bottom">© <span id="current-year">2025</span> Lush Crete. All Rights Reserved.</div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+
+    <script>
+        /*
+        ====================================================================================================
+        Particle Background Engine & Page UX Script
+        ====================================================================================================
+        */
+        
+        // --- Debounce Function ---
+        function debounce(func, wait = 10, immediate = false) {
+            let timeout;
+            return function executedFunction() {
+                const context = this, args = arguments;
+                const later = function() { timeout = null; if (!immediate) func.apply(context, args); };
+                const callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Particle Engine ---
+            class Engine{constructor(a){this.canvas=a,this.scene=null,this.camera=null,this.renderer=null,this.composer=null,this.clock=new THREE.Clock,this.mouse=new THREE.Vector2(-10,-10),this.drag=!1,this.prev={x:0,y:0},this.vel={x:0,y:0},this.root=new THREE.Group,this.list=[]}init(){const a={SCENE:{bg:16777215},OBJECTS:{count:25,min:120,max:280,shapes:["square","circle"],volume:{x:2200,y:1800,z:1800},mat:{metalness:.05,roughness:.95},extrude:{steps:1,depth:20,bevelEnabled:!0,bevelThickness:4,bevelSize:3,bevelOffset:0,bevelSegments:2}},ORBS:{enabled:!0,count:8,min:10,max:18,color:11184810},PHYS:{min:.5,max:1.4,mousePush:350,repelDist:400,repelStrength:.08},STARS:{enabled:!1},WEB:{enabled:!0,dist:400,color:12566463,pulse:!0,speed:2.5,min:.08,max:.3},LIGHT:{amb:{c:16777215,i:1.5},hemi:{s:16777215,g:13421772,i:.8},dir:{on:!0,c:16777215,i:.3,pos:{x:500,y:800,z:500}}},POST:{on:!0,bloom:{on:!0,strength:.15,radius:.4,threshold:.9}},CAM:{look:.04,drag:.002,damp:.95,zoom:1.1,min:400,max:2500}};this.WORLD=a,this.core(),this.light(),this.geometry(),this.post(),this.events(),this.loop()}core(){this.scene=new THREE.Scene,this.scene.background=new THREE.Color(this.WORLD.SCENE.bg),this.scene.fog=new THREE.Fog(this.WORLD.SCENE.bg,1500,4e3);const{clientWidth:a,clientHeight:b}=this.canvas;this.camera=new THREE.PerspectiveCamera(75,a/b,1,1e4),this.camera.position.z=1e3,this.renderer=new THREE.WebGLRenderer({canvas:this.canvas,antialias:!0,alpha:!0}),this.renderer.setSize(a,b),this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))}light(){this.scene.add(new THREE.AmbientLight(this.WORLD.LIGHT.amb.c,this.WORLD.LIGHT.amb.i)),this.scene.add(new THREE.HemisphereLight(this.WORLD.LIGHT.hemi.s,this.WORLD.LIGHT.hemi.g,this.WORLD.LIGHT.hemi.i));if(this.WORLD.LIGHT.dir.on){const a=new THREE.DirectionalLight(this.WORLD.LIGHT.dir.c,this.WORLD.LIGHT.dir.i),b=this.WORLD.LIGHT.dir.pos;a.position.set(b.x,b.y,b.z),this.scene.add(a)}}concreteTex(a=256,b=256){const c=document.createElement("canvas");c.width=a,c.height=b;const d=c.getContext("2d"),e=220;d.fillStyle=`rgb(${e},${e},${e})`,d.fillRect(0,0,a,b);for(let f=0;f<8e3;f++){const g=Math.random()*a,h=Math.random()*b,i=1.5*Math.random()+.5,j=e+50*(.5-Math.random());d.fillStyle=`rgba(${j},${j},${j},${.4*Math.random()})`,d.fillRect(g,h,i,i)}return new THREE.CanvasTexture(c)}geometry(){this.makeMain(),this.WORLD.ORBS.enabled&&this.makeOrbs(),this.WORLD.STARS.enabled&&this.makeStars(),this.WORLD.WEB.enabled&&this.makeWeb(),this.scene.add(this.root)}makeMain(){const a=this.WORLD.OBJECTS,b=this.WORLD.PHYS;for(let c=0;c<a.count;c++){const d=THREE.MathUtils.randFloat(a.min,a.max);let e;const f=this.concreteTex(),g=new THREE.MeshStandardMaterial({map:f,side:THREE.DoubleSide,...a.mat}),h=a.shapes[c%a.shapes.length];switch(h){case"circle":{const i=new THREE.Shape;i.absarc(0,0,d/2,0,2*Math.PI,!1),e=new THREE.ExtrudeGeometry(i,a.extrude);break}case"square":default:e=new THREE.BoxGeometry(d,d,a.extrude.depth)}e.center();const j=new THREE.Mesh(e,g);j.position.set((.5-Math.random())*a.volume.x,(.5-Math.random())*a.volume.y,(.5-Math.random())*a.volume.z);const k=THREE.MathUtils.randFloat(b.min,b.max),l=new THREE.Vector3(.5-Math.random(),.5-Math.random(),.5-Math.random()).normalize().multiplyScalar(k);j.userData={speed:k,rot:new THREE.Vector3(.002*(.5-Math.random()),.002*(.5-Math.random()),.002*(.5-Math.random())),vel:l},this.list.push(j),this.root.add(j)}}makeOrbs(){const a=this.WORLD.ORBS,b=this.WORLD.PHYS,c=this.WORLD.OBJECTS.volume,d=new THREE.SphereGeometry(1,16,16),e=new THREE.MeshBasicMaterial({color:a.color});for(let f=0;f<a.count;f++){const g=new THREE.Mesh(d,e),h=THREE.MathUtils.randFloat(a.min,a.max);g.scale.set(h,h,h),g.position.set((.5-Math.random())*c.x,(.5-Math.random())*c.y,(.5-Math.random())*c.z);const i=.5*THREE.MathUtils.randFloat(b.min,b.max),j=new THREE.Vector3(.5-Math.random(),.5-Math.random(),.5-Math.random()).normalize().multiplyScalar(i);g.userData={speed:i,rot:new THREE.Vector3(0,0,0),vel:j},this.list.push(g),this.root.add(g)}}makeWeb(){const a=this.WORLD.WEB,b=new THREE.LineBasicMaterial({color:a.color,transparent:!0,opacity:a.max,blending:THREE.AdditiveBlending});this.web=new THREE.LineSegments(new THREE.BufferGeometry,b),this.root.add(this.web)}post(){if(!this.WORLD.POST.on)return;const a=this.canvas.clientWidth,b=this.canvas.clientHeight;this.composer=new THREE.EffectComposer(this.renderer),this.composer.addPass(new THREE.RenderPass(this.scene,this.camera));if(this.WORLD.POST.bloom.on){const c=new THREE.UnrealBloomPass(new THREE.Vector2(a,b),this.WORLD.POST.bloom.strength,this.WORLD.POST.bloom.radius,this.WORLD.POST.bloom.threshold);this.composer.addPass(c)}}events(){addEventListener("resize",()=>this.resize()),this.canvas.addEventListener("mousemove",a=>this.move(a)),this.canvas.addEventListener("mousedown",a=>this.down(a)),addEventListener("mouseup",()=>this.up()),this.canvas.addEventListener("wheel",a=>this.wheel(a))}resize(){const a=this.canvas.clientWidth,b=this.canvas.clientHeight;this.camera.aspect=a/b,this.camera.updateProjectionMatrix(),this.renderer.setSize(a,b),this.renderer.setPixelRatio(Math.min(devicePixelRatio,2)),this.composer&&this.composer.setSize(a,b)}move(a){this.mouse.x=a.clientX/innerWidth*2-1,this.mouse.y=-(a.clientY/innerHeight)*2+1;if(this.drag){const b=a.clientX-this.prev.x,c=a.clientY-this.prev.y;this.vel.y+=b*this.WORLD.CAM.drag,this.vel.x+=c*this.WORLD.CAM.drag,this.prev={x:a.clientX,y:a.clientY}}}down(a){this.drag=!0,this.prev={x:a.clientX,y:a.clientY}}up(){this.drag=!1}wheel(a){const b=a.deltaY<0?1/this.WORLD.CAM.zoom:this.WORLD.CAM.zoom;this.camera.position.z=THREE.MathUtils.clamp(this.camera.position.z*b,this.WORLD.CAM.min,this.WORLD.CAM.max)}loop(){this.update(),(this.composer?this.composer:this.renderer).render(this.scene,this.camera),requestAnimationFrame(()=>this.loop())}update(){const a=this.mouseWorld();this.list.forEach(b=>{this.mouseRepel(b,a),this.objectRepel(b,this.list)}),this.list.forEach(b=>{var c,d,e,f;((c=b.userData.vel)==null?void 0:c.lengthSq())>0&&b.userData.vel.normalize().multiplyScalar(b.userData.speed),b.position.add(b.userData.vel||new THREE.Vector3),this.wrap(b),b.rotation.x+=((d=b.userData.rot)==null?void 0:d.x)||0,b.rotation.y+=((e=b.userData.rot)==null?void 0:e.y)||0,b.rotation.z+=((f=b.userData.rot)==null?void 0:f.z)||0}),this.vel.x*=this.WORLD.CAM.damp,this.vel.y*=this.WORLD.CAM.damp,this.root.rotation.x+=this.vel.x,this.root.rotation.y+=this.vel.y,this.web&&this.updateWeb(),this.look()}mouseWorld(){const a=new THREE.Vector3(this.mouse.x,this.mouse.y,.5);a.unproject(this.camera);const b=a.sub(this.camera.position).normalize(),c=-this.camera.position.z/b.z;return this.camera.position.clone().add(b.multiplyScalar(c))}mouseRepel(a,b){var d;const c=this.WORLD.PHYS;a.position.distanceTo(b)<c.mousePush*2&&((d=a.userData.vel)==null||d.add(a.position.clone().sub(b).normalize().multiplyScalar(c.mousePush*20/(a.position.distanceTo(b)+.1))))}objectRepel(a,b){const c=this.WORLD.PHYS;b.forEach(d=>{var e;if(a!==d){const f=a.position.distanceTo(d.position);f<c.repelDist&&((e=a.userData.vel)==null||e.add(a.position.clone().sub(d.position).normalize().multiplyScalar((c.repelDist-f)*c.repelStrength)))}})}wrap(a){const b=this.WORLD.OBJECTS.volume,c=(d,e)=>{a.position[d]>e&&(a.position[d]=-e),a.position[d]<-e&&(a.position[d]=e)};c("x",b.x/2),c("y",b.y/2),c("z",b.z/2)}updateWeb(){const a=this.WORLD.WEB,b=this.list.filter(c=>c.geometry?.type!=="SphereGeometry");if(b.length<2)return;const c=[];for(let d=0;d<b.length;d++)for(let e=d+1;e<b.length;e++)b[d].position.distanceTo(b[e].position)<a.dist&&c.push(...b[d].position.toArray(),...b[e].position.toArray());this.web.geometry.setAttribute("position",new THREE.Float32BufferAttribute(c,3));if(a.pulse){const d=(Math.sin(this.clock.getElapsedTime()*a.speed)+1)/2;this.web.material.opacity=d*(a.max-a.min)+a.min}}look(){const a=-this.mouse.x*innerWidth/4*this.WORLD.CAM.look,b=this.mouse.y*innerHeight/4*this.WORLD.CAM.look,c=.03;this.camera.position.x+=(a-this.camera.position.x)*c,this.camera.position.y+=(b-this.camera.position.y)*c,this.camera.lookAt(this.scene.position)}}
+            
+            // --- Safely init particle engine ---
+            try {
+                const canvasElement = document.getElementById('particle-canvas');
+                if (canvasElement) {
+                    const engine = new Engine(canvasElement);
+                    engine.init();
+                } else {
+                    console.warn("Particle canvas not found.");
+                }
+            } catch(e) {
+                console.error("Failed to initialize particle engine:", e);
+            }
+
+            function initPageUX() {
+                const doorOverlay = document.querySelector('.door-overlay');
+                const body = document.body; // Added body variable
+
+                // --- Add padding-top to body based on header height ---
+                const header = document.getElementById('main-header'); // Use new ID
+                if (header) {
+                    const setBodyPadding = () => {
+                        if (window.getComputedStyle(header).position === 'fixed') {
+                            document.body.style.paddingTop = header.offsetHeight + 'px';
+                        }
+                    };
+                    setBodyPadding(); 
+                    let resizeTimer;
+                    window.addEventListener('resize', () => {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(setBodyPadding, 100);
+                    });
+                } else {
+                    console.warn("Header element '#main-header' not found.");
+                }
+                // --- End header padding logic ---
+
+                // --- Corrected Door Loader Logic (Matches index.html) ---
+                if (doorOverlay) {
+                    body.style.overflow = 'hidden'; 
+                    setTimeout(() => {
+                        body.classList.add('intro-active'); // Triggers CSS transitions
+                    }, 100);
+
+                    setTimeout(() => {
+                         body.classList.add('intro-done'); // Triggers CSS transitions end state
+                    }, 2200); 
+                    
+                    setTimeout(() => {
+                        doorOverlay.classList.add('hidden'); // Use class to hide smoothly
+                        body.style.overflow = ''; // Restore scrolling
+                    }, 2600); // Start hiding slightly after doors should be open
+                } else {
+                    console.warn("Door overlay element '.door-overlay' not found.");
+                    body.style.overflow = ''; // Ensure scrolling is enabled if loader fails
+                }
+                
+                let lastScrollTop = 0;
+                if (header) { 
+                    window.addEventListener('scroll', () => { 
+                        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight){
+                            header.classList.add('is-hidden');
+                        } else {
+                            header.classList.remove('is-hidden');
+                        }
+                        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                        header.classList.toggle('scrolled', window.scrollY > 50);
+                    }, { passive: true }); 
+                }
+                
+                // --- Scroll Animation Observer ---
+                const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}})},{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+                document.querySelectorAll('.scroll-anim').forEach(el=>observer.observe(el));
+                
+                // --- Card 3D Tilt Effect ---
+                document.querySelectorAll('.service-card').forEach(c=>{const m=8;c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,mx=e.clientX-x,my=e.clientY-y,rx=-(my/(r.height/2))*m,ry=(mx/(r.width/2))*m;c.style.transition='transform 0.1s ease-out';c.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;const mpx=e.clientX-r.left,mpy=e.clientY-r.top;c.style.setProperty('--mx',`${mpx}px`);c.style.setProperty('--my',`${mpy}px`)});c.addEventListener('mouseleave',()=>{c.style.transition='transform 0.4s ease-in-out';c.style.transform='rotateX(0deg) rotateY(0deg) translateZ(0px)'})});
+                
+                 // --- NEW: Mobile Nav Toggle Logic ---
+                const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+                const primaryNav = document.getElementById('primary-navigation');
+                
+                if (mobileNavToggle && primaryNav) {
+                    mobileNavToggle.addEventListener('click', () => {
+                        const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+                        
+                        if (isVisible) {
+                            primaryNav.setAttribute('data-visible', 'false');
+                            mobileNavToggle.setAttribute('aria-expanded', 'false');
+                            body.classList.remove('body-nav-open');
+                        } else {
+                            primaryNav.setAttribute('data-visible', 'true');
+                            mobileNavToggle.setAttribute('aria-expanded', 'true');
+                            body.classList.add('body-nav-open');
+                        }
+                    });
+                    // console.log("Mobile navigation ('doors') initialized."); // Optional: remove logs for production
+                } else {
+                    console.warn("Mobile navigation toggle or nav list not found.");
+                }
+                // --- END Mobile Nav ---
+
+                 // --- Update Footer Year ---
+                const yearSpan = document.getElementById('current-year');
+                if (yearSpan) {
+                    yearSpan.textContent = new Date().getFullYear();
+                } else {
+                    const footerBottom = document.querySelector('.foot-bottom');
+                    if(footerBottom && !footerBottom.textContent.includes(new Date().getFullYear())) {
+                         footerBottom.innerHTML = `© ${new Date().getFullYear()} Lush Crete. All Rights Reserved.`;
+                    }
+                }
+            }
+
+            initPageUX();
+        });
+    </script>
+
+</body>
+</html>
